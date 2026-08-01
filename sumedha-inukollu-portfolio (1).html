@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sumedha Inukollu — Computational Biologist</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=Public+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #F3ECDD;
+    --bg-alt: #EAE0C9;
+    --card: #FAF6ED;
+    --ink: #2B2620;
+    --ink-soft: #6B6153;
+    --clay: #A8562E;
+    --moss: #5F6B4A;
+    --gold: #B98A2E;
+    --line: #D8CBAB;
+    --max: 880px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Public Sans', sans-serif;
+    font-size:16px;
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+  }
+  ::selection{background:var(--clay);color:var(--bg);}
+  a{color:inherit;}
+  .wrap{max-width:var(--max); margin:0 auto; padding:0 28px;}
+
+  h1,h2,h3{
+    font-family:'Newsreader', serif;
+    font-weight:500;
+    margin:0;
+    letter-spacing:-0.01em;
+  }
+  .eyebrow{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12px;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--ink-soft);
+    display:flex;
+    align-items:center;
+    gap:10px;
+  }
+  .eyebrow::before{
+    content:"";
+    width:7px;height:7px;border-radius:50%;
+    background:var(--clay);
+    display:inline-block;
+  }
+
+  /* NAV */
+  nav{
+    position:sticky; top:0; z-index:50;
+    background:rgba(243,236,221,0.88);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);
+  }
+  nav .wrap{
+    display:flex; justify-content:space-between; align-items:center;
+    padding-top:16px; padding-bottom:16px;
+    flex-wrap:wrap; gap:10px;
+  }
+  .nav-name{
+    font-family:'Newsreader', serif;
+    font-style:italic;
+    font-size:19px;
+  }
+  .nav-links{
+    display:flex; gap:22px; flex-wrap:wrap;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12.5px;
+    text-transform:uppercase;
+    letter-spacing:0.06em;
+  }
+  .nav-links a{text-decoration:none; color:var(--ink-soft); transition:color .2s;}
+  .nav-links a:hover{color:var(--clay);}
+
+  section{padding:88px 0;}
+  section + section{border-top:1px solid var(--line);}
+
+  /* HERO */
+  .hero{padding-top:96px; padding-bottom:96px;}
+  .hero h1{
+    font-size:clamp(34px, 5.4vw, 54px);
+    line-height:1.14;
+    margin-top:22px;
+    max-width:15ch;
+  }
+  .hero h1 em{
+    font-style:italic;
+    color:var(--clay);
+  }
+  .hero p.lede{
+    font-size:18px;
+    color:var(--ink-soft);
+    max-width:56ch;
+    margin-top:26px;
+  }
+  .hero-meta{
+    margin-top:34px;
+    display:flex; gap:18px; flex-wrap:wrap;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12.5px;
+    color:var(--ink-soft);
+  }
+  .hero-meta span{
+    border:1px solid var(--line);
+    border-radius:100px;
+    padding:6px 14px;
+    background:var(--card);
+  }
+  .scroll-cue{
+    margin-top:56px;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12.5px;
+    color:var(--clay);
+    text-decoration:none;
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+  }
+  .scroll-cue svg{width:14px;height:14px;}
+
+  /* fade in */
+  .reveal{opacity:0; transform:translateY(14px); transition:opacity .7s ease, transform .7s ease;}
+  .reveal.on{opacity:1; transform:translateY(0);}
+
+  h2.section-title{
+    font-size:clamp(24px,3vw,30px);
+    margin-top:10px;
+    max-width:26ch;
+  }
+  .section-intro{color:var(--ink-soft); max-width:62ch; margin-top:14px; font-size:15.5px;}
+
+  /* ABOUT */
+  .about-grid{
+    display:grid; grid-template-columns:1.3fr 1fr; gap:48px;
+    margin-top:38px;
+  }
+  .edu-item{
+    padding:16px 0; border-top:1px solid var(--line);
+  }
+  .edu-item:first-child{border-top:none;}
+  .edu-item .role{font-weight:600; font-size:15px;}
+  .edu-item .meta{
+    font-family:'IBM Plex Mono', monospace; font-size:12px; color:var(--ink-soft); margin-top:4px;
+  }
+  @media (max-width:760px){ .about-grid{grid-template-columns:1fr;} }
+
+  /* SIGNATURE / VOLCANO PLOT */
+  .signature{background:var(--bg-alt);}
+  .plot-panel{
+    margin-top:36px;
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:14px;
+    padding:28px;
+  }
+  .plot-grid{display:grid; grid-template-columns:1fr 260px; gap:30px; align-items:start;}
+  @media (max-width:780px){ .plot-grid{grid-template-columns:1fr;} }
+  svg.volcano{width:100%; height:auto; display:block;}
+  .controls label{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11.5px; text-transform:uppercase; letter-spacing:.06em;
+    color:var(--ink-soft);
+    display:block; margin-bottom:6px;
+  }
+  .controls .row{margin-bottom:26px;}
+  .controls input[type=range]{
+    width:100%; accent-color:var(--clay);
+  }
+  .controls .val{
+    font-family:'IBM Plex Mono', monospace; font-size:13px; color:var(--ink); margin-top:4px;
+  }
+  .stat-block{
+    margin-top:8px;
+    border-top:1px solid var(--line);
+    padding-top:18px;
+  }
+  .stat-block .big{
+    font-family:'Newsreader', serif; font-size:30px; color:var(--clay);
+  }
+  .stat-block .cap{font-family:'IBM Plex Mono', monospace; font-size:11.5px; color:var(--ink-soft); margin-top:2px;}
+  .narrative{
+    margin-top:16px; font-size:13.5px; color:var(--ink-soft); font-style:italic; min-height:40px;
+  }
+  .plot-caption{
+    margin-top:22px; font-size:14.5px; color:var(--ink-soft); max-width:70ch; border-top:1px solid var(--line); padding-top:20px;
+  }
+
+  /* PROJECTS */
+  .proj-grid{
+    display:grid; grid-template-columns:1fr 1fr; gap:22px; margin-top:38px;
+  }
+  @media (max-width:760px){ .proj-grid{grid-template-columns:1fr;} }
+  .card{
+    background:var(--card); border:1px solid var(--line); border-radius:12px;
+    padding:24px; display:flex; flex-direction:column; height:100%;
+  }
+  .card .meta{font-family:'IBM Plex Mono', monospace; font-size:11.5px; color:var(--ink-soft); margin-top:6px;}
+  .card h3{font-size:18px; margin-top:12px;}
+  .card p{font-size:14.5px; color:var(--ink-soft); margin-top:10px; flex-grow:1;}
+  .tags{display:flex; flex-wrap:wrap; gap:6px; margin-top:16px;}
+  .tag{
+    font-family:'IBM Plex Mono', monospace; font-size:11px;
+    background:var(--bg-alt); border:1px solid var(--line); border-radius:100px;
+    padding:4px 10px; color:var(--ink-soft);
+  }
+
+  /* PUBLICATIONS */
+  .pub{
+    display:flex; justify-content:space-between; gap:16px; align-items:flex-start;
+    padding:20px 0; border-top:1px solid var(--line); flex-wrap:wrap;
+  }
+  .pub:first-of-type{border-top:none;}
+  .pub h3{font-size:16.5px; font-weight:500; max-width:56ch;}
+  .pub .journal{font-family:'IBM Plex Mono', monospace; font-size:12px; color:var(--ink-soft); margin-top:6px;}
+  .status{
+    font-family:'IBM Plex Mono', monospace; font-size:11px; text-transform:uppercase;
+    padding:5px 12px; border-radius:100px; white-space:nowrap;
+  }
+  .status.pub-yes{background:rgba(95,107,74,0.15); color:var(--moss);}
+  .status.pub-review{background:rgba(185,138,46,0.16); color:var(--gold);}
+
+  /* SKILLS */
+  .skill-group{margin-top:28px;}
+  .skill-group h4{
+    font-family:'IBM Plex Mono', monospace; font-size:12px; text-transform:uppercase; letter-spacing:.06em;
+    color:var(--ink-soft); margin-bottom:12px;
+  }
+  .skill-tags{display:flex; flex-wrap:wrap; gap:8px;}
+  .skill-tags .tag{background:var(--bg); }
+
+  /* LEADERSHIP */
+  .lead-grid{display:grid; grid-template-columns:1fr 1fr; gap:40px; margin-top:38px;}
+  @media (max-width:760px){ .lead-grid{grid-template-columns:1fr;} }
+  .lead-list{list-style:none; margin:0; padding:0;}
+  .lead-list li{
+    padding:14px 0; border-top:1px solid var(--line); font-size:14.5px;
+  }
+  .lead-list li:first-child{border-top:none;}
+  .lead-list .lbl{font-weight:600; display:block;}
+  .lead-list .sub{color:var(--ink-soft); font-size:13px; margin-top:2px; font-family:'IBM Plex Mono', monospace;}
+
+  /* VISION */
+  .vision{background:var(--bg-alt);}
+  .vision blockquote{
+    font-family:'Newsreader', serif; font-style:italic;
+    font-size:clamp(20px,2.6vw,26px);
+    line-height:1.5; margin:26px 0 0 0; color:var(--ink);
+    max-width:44ch;
+    border-left:2px solid var(--clay);
+    padding-left:26px;
+  }
+  .vision p{color:var(--ink-soft); margin-top:22px; max-width:62ch; font-size:15px;}
+
+  /* FOOTER */
+  footer{padding:64px 0 56px;}
+  .footer-grid{display:flex; justify-content:space-between; align-items:flex-end; flex-wrap:wrap; gap:24px;}
+  footer h2{font-size:26px;}
+  .footer-links{display:flex; gap:20px; flex-wrap:wrap; margin-top:16px;}
+  .footer-links a{
+    font-family:'IBM Plex Mono', monospace; font-size:13px; text-decoration:none;
+    border-bottom:1px solid var(--clay); padding-bottom:2px; color:var(--ink);
+  }
+  .fine{font-family:'IBM Plex Mono', monospace; font-size:11.5px; color:var(--ink-soft);}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <div class="nav-name">Sumedha Inukollu</div>
+    <div class="nav-links">
+      <a href="#about">About</a>
+      <a href="#signature">The Threshold Effect</a>
+      <a href="#research">Research</a>
+      <a href="#publications">Publications</a>
+      <a href="#vision">Vision</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="wrap">
+    <div class="eyebrow">Computational Biologist · Bengaluru, Karnataka</div>
+    <h1>The bridge between the <em>bench</em> and the decision.</h1>
+    <p class="lede">I've spent the last few years moving between wet lab, pipeline, and stakeholder table — as a bioinformatician, an analyst, and increasingly, someone who leads the project rather than just runs it. Wherever I sit, the job is the same: turn dense biological data into something a clinician, a team, or a patient can actually act on.</p>
+    <div class="hero-meta">
+      <span>Clinical Data Analyst</span>
+      <span>Bioinformatician</span>
+      <span>Product / Project Lead</span>
+      <span>PhD-track Researcher</span>
+    </div>
+    <a class="scroll-cue" href="#signature">See how one threshold changes everything
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 4v16M5 13l7 7 7-7"/></svg>
+    </a>
+  </div>
+</section>
+
+<section id="about" class="reveal">
+  <div class="wrap">
+    <div class="eyebrow">About</div>
+    <h2 class="section-title">Data, taken seriously.</h2>
+    <p class="section-intro">I move fluidly between the bench, the pipeline, and the people waiting on results — because a dataset only means something once someone downstream can act on it. That's true whether I'm running a differential expression pipeline, scoping a product roadmap, or briefing a team on what the numbers actually say. In five years, I want to be leading that translation: setting direction for a team that treats rigor and clarity as non-negotiable.</p>
+    <div class="about-grid">
+      <div>
+        <div class="edu-item">
+          <div class="role">M.Sc. in Bioinformatics</div>
+          <div class="meta">Pondicherry University · Sep 2023 – May 2025 · CGPA 7.9</div>
+        </div>
+        <div class="edu-item">
+          <div class="role">B.Sc. in Biotechnology</div>
+          <div class="meta">Andhra Loyola College, Vijayawada · Jul 2020 – Jul 2023 · CGPA 8.4</div>
+        </div>
+      </div>
+      <div>
+        <div class="edu-item">
+          <div class="role">Qualified GATE Examination</div>
+          <div class="meta">2023</div>
+        </div>
+        <div class="edu-item">
+          <div class="role">Wet-lab foundation</div>
+          <div class="meta">HPLC · PCR · SDS-PAGE · Tissue Culture · Western Blotting · UV Spectroscopy</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="signature" class="signature reveal">
+  <div class="wrap">
+    <div class="eyebrow">Signature</div>
+    <h2 class="section-title">The Threshold Effect</h2>
+    <p class="section-intro">Every dot below is a gene from a simplified differential-expression run. Move the two lines — fold-change and significance — and watch genes cross from "noise" into "signal," and back again. This is the exact decision I sat with while building biomarker lists for my thesis.</p>
+
+    <div class="plot-panel">
+      <div class="plot-grid">
+        <svg class="volcano" viewBox="0 0 640 420" xmlns="http://www.w3.org/2000/svg">
+          <g id="axes"></g>
+          <g id="threshold-lines"></g>
+          <g id="points"></g>
+        </svg>
+        <div class="controls">
+          <div class="row">
+            <label for="fcSlider">log2 fold-change cutoff — <span id="fcVal">1.0</span></label>
+            <input type="range" id="fcSlider" min="0.2" max="3" step="0.1" value="1.0">
+          </div>
+          <div class="row">
+            <label for="pSlider">−log10(p) cutoff — <span id="pVal">1.3</span></label>
+            <input type="range" id="pSlider" min="0.5" max="6" step="0.1" value="1.3">
+          </div>
+          <div class="stat-block">
+            <div class="big" id="sigCount">—</div>
+            <div class="cap">genes called significant, of 140</div>
+          </div>
+          <div class="narrative" id="narrative"></div>
+        </div>
+      </div>
+      <p class="plot-caption">In my thesis on lymphoma, leukemia, and glioma transcriptomes, this exact line — where to call a gene "significant" — decided which genes we carried forward as candidate biomarkers. I don't take that line lightly, and I don't think anyone building diagnostics should either.</p>
+    </div>
+  </div>
+</section>
+
+<section id="research" class="reveal">
+  <div class="wrap">
+    <div class="eyebrow">Research &amp; Projects</div>
+    <h2 class="section-title">Four problems, one method: look closer than the pipeline defaults to.</h2>
+    <div class="proj-grid">
+
+      <div class="card">
+        <div class="meta">MASTER'S THESIS · PONDICHERRY UNIVERSITY · DEC 2024 – MAY 2025</div>
+        <h3>Comparative Transcriptomics of Lymphoma, Leukemia &amp; Glioma</h3>
+        <p>Integrated bulk RNA-seq and scRNA-seq to surface shared molecular signatures and tumor-microenvironment features across three cancer types, then built protein–protein interaction networks to identify hub genes and ran survival analysis for prognostic relevance.</p>
+        <div class="tags">
+          <span class="tag">DESeq2</span><span class="tag">Seurat</span><span class="tag">Cytoscape</span><span class="tag">CytoHubba</span><span class="tag">GEPIA2</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="meta">FRANKFURT UNIVERSITY · APR 2024 – APR 2025</div>
+        <h3>Gene Expression Dynamics in Ischemic Stroke</h3>
+        <p>Traced ischemia/reperfusion cellular responses through gene annotation and enrichment analysis, then mapped transcription-factor interaction networks to connect molecular pathways to injury progression.</p>
+        <div class="tags">
+          <span class="tag">ShinyGo</span><span class="tag">Cytoscape</span><span class="tag">X2K</span><span class="tag">Multi-omics</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="meta">TAMPERE UNIVERSITY · JUL 2024 – NOV 2025</div>
+        <h3>Gene Expression in HIV &amp; HIV-TB Co-infection</h3>
+        <p>Mined microarray datasets for differentially expressed genes, built PPI networks for biomarker identification, and applied machine-learning models to shortlist drug compounds via virtual screening.</p>
+        <div class="tags">
+          <span class="tag">GEO2R</span><span class="tag">limma</span><span class="tag">ML screening</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="meta">RESEARCH PROJECT · DEC 2024 – JUL 2025</div>
+        <h3>Candidate Gene Prioritization in Pediatric ALL</h3>
+        <p>Analyzed WES data from 352 pediatric ALL patients against MRD response, computed chromosome-wise mutational burden, and used bin-wise logistic regression with FDR correction to flag significant genomic regions.</p>
+        <div class="tags">
+          <span class="tag">WES</span><span class="tag">Logistic regression</span><span class="tag">FDR correction</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section id="publications" class="reveal">
+  <div class="wrap">
+    <div class="eyebrow">Publications</div>
+    <h2 class="section-title">Written down, so it can be checked.</h2>
+
+    <div class="pub">
+      <div>
+        <h3>Organelle-specific molecular remodeling in mouse brain microvessels after ischemic stroke</h3>
+        <div class="journal">Biophysica</div>
+      </div>
+      <span class="status pub-yes">Published</span>
+    </div>
+
+    <div class="pub">
+      <div>
+        <h3>Crosstalk between mTOR and NF-κB signaling pathways in Clear Cell Renal Cell Carcinoma</h3>
+        <div class="journal">Cancers Journal</div>
+      </div>
+      <span class="status pub-review">Under review</span>
+    </div>
+  </div>
+</section>
+
+<section id="skills" class="reveal">
+  <div class="wrap">
+    <div class="eyebrow">Toolkit</div>
+    <h2 class="section-title">What I reach for.</h2>
+
+    <div class="skill-group">
+      <h4>Genomics &amp; NGS</h4>
+      <div class="skill-tags">
+        <span class="tag">Bulk RNA-seq</span><span class="tag">scRNA-seq</span><span class="tag">WES</span><span class="tag">Variant Calling</span><span class="tag">Gene Annotation</span><span class="tag">Multi-omics Integration</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <h4>Bioinformatics &amp; Structural Tools</h4>
+      <div class="skill-tags">
+        <span class="tag">Schrodinger</span><span class="tag">GROMACS</span><span class="tag">BLAST</span><span class="tag">PyMOL</span><span class="tag">AutoDock</span><span class="tag">Cytoscape</span><span class="tag">DAVID</span><span class="tag">STRING</span><span class="tag">BioGRID</span><span class="tag">EMBOSS</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <h4>Data Analysis</h4>
+      <div class="skill-tags">
+        <span class="tag">FASTQC</span><span class="tag">Bowtie</span><span class="tag">SAMTools</span><span class="tag">IGV</span><span class="tag">GATK</span><span class="tag">STAR</span><span class="tag">Salmon</span><span class="tag">HISAT2</span><span class="tag">GWAS</span><span class="tag">VarScan</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <h4>Programming</h4>
+      <div class="skill-tags">
+        <span class="tag">Python</span><span class="tag">R</span><span class="tag">Linux Scripting</span><span class="tag">Nextflow</span><span class="tag">Machine Learning</span><span class="tag">Data Structures &amp; Algorithms</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <h4>Experimental</h4>
+      <div class="skill-tags">
+        <span class="tag">HPLC</span><span class="tag">PCR</span><span class="tag">SDS-PAGE</span><span class="tag">Tissue Culture</span><span class="tag">Gel Electrophoresis</span><span class="tag">Western Blotting</span><span class="tag">UV Spectroscopy</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="leadership" class="reveal">
+  <div class="wrap">
+    <div class="eyebrow">Leadership &amp; Service</div>
+    <h2 class="section-title">Leadership, practiced early.</h2>
+    <div class="lead-grid">
+      <div>
+        <h4 style="font-family:'IBM Plex Mono',monospace; font-size:12px; text-transform:uppercase; color:var(--ink-soft); margin-bottom:10px;">Roles</h4>
+        <ul class="lead-list">
+          <li><span class="lbl">Mentee, Women in Science Research (WISR)</span><span class="sub">Program participant</span></li>
+          <li><span class="lbl">Mentor, Claylab Foundation</span><span class="sub">Guiding early-career learners</span></li>
+          <li><span class="lbl">Conference Volunteer</span><span class="sub">Dept. of Bioinformatics, Pondicherry University</span></li>
+          <li><span class="lbl">Regular Blood Donor</span><span class="sub">Ongoing</span></li>
+        </ul>
+      </div>
+      <div>
+        <h4 style="font-family:'IBM Plex Mono',monospace; font-size:12px; text-transform:uppercase; color:var(--ink-soft); margin-bottom:10px;">Conferences &amp; Certifications</h4>
+        <ul class="lead-list">
+          <li><span class="lbl">Intl. Conference on Bioinformatics in Health &amp; Food Security</span><span class="sub">Pondicherry University · Mar 2024</span></li>
+          <li><span class="lbl">National Symposium on Structural Bioinformatics</span><span class="sub">Pondicherry University · Mar 2025</span></li>
+          <li><span class="lbl">NCURB — Poster Presentation</span><span class="sub">IISER Tirupati · Dec 2024</span></li>
+          <li><span class="lbl">NGS Workshop · Schrödinger SBDD · Python (Udemy) · Neurobiology (SCIENSPUR) · GCP NIDA Scientific Writing</span><span class="sub">2022 – 2025</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="vision" class="vision reveal">
+  <div class="wrap">
+    <div class="eyebrow">Why</div>
+    <h2 class="section-title">The point of all this.</h2>
+    <blockquote>Personalized medicine already works — for the well-insured and the well-sequenced. I want to help build the version that works for everyone else, too.</blockquote>
+    <p>I think about the person at the end of every pipeline I write — not as an abstraction, but as someone who deserves a diagnosis that doesn't depend on their zip code or income. That's the thread connecting a threshold slider on a volcano plot to a mutation-burden analysis in pediatric leukemia to whatever lab or team I eventually lead: get the details right, because the details are where the person is.</p>
+  </div>
+</section>
+
+<footer id="contact">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <div class="eyebrow">Contact</div>
+        <h2>Let's talk data, medicine, or both.</h2>
+        <div class="footer-links">
+          <a href="mailto:sumedhas634@gmail.com">sumedhas634@gmail.com</a>
+          <a href="https://linkedin.com/in/sumedha-inukollu" target="_blank" rel="noopener">linkedin.com/in/sumedha-inukollu</a>
+        </div>
+      </div>
+      <div class="fine">Bengaluru, Karnataka · Built with care for detail</div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // ---- reveal on scroll ----
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('on'); } });
+  }, {threshold:0.12});
+  revealEls.forEach(el => io.observe(el));
+
+  // ---- volcano plot ----
+  const W = 640, H = 420;
+  const padL = 56, padR = 20, padT = 20, padB = 46;
+  const xMin = -4, xMax = 4, yMin = 0, yMax = 8;
+
+  function xScale(fc){ return padL + (fc - xMin) / (xMax - xMin) * (W - padL - padR); }
+  function yScale(p){ return (H - padB) - (p - yMin) / (yMax - yMin) * (H - padT - padB); }
+
+  const labeledGenes = ["TP53","MYC","BCL2","PTEN","EGFR","VEGFA","IL6","CDKN2A"];
+
+  function seededRandom(seed){
+    let s = seed;
+    return function(){
+      s = (s * 9301 + 49297) % 233280;
+      return s / 233280;
+    };
+  }
+  const rand = seededRandom(42);
+
+  const genes = [];
+  for(let i = 0; i < 140; i++){
+    let fc, p;
+    const zone = rand();
+    if(zone < 0.14){
+      fc = 1.6 + rand()*2.2;
+      p = 2 + rand()*5.4;
+    } else if(zone < 0.28){
+      fc = -1.6 - rand()*2.2;
+      p = 2 + rand()*5.4;
+    } else {
+      fc = (rand() - 0.5) * 5.2;
+      p = rand()*2.6;
+    }
+    const isLabeled = i < labeledGenes.length;
+    genes.push({
+      fc: Math.max(xMin+0.15, Math.min(xMax-0.15, fc)),
+      p: Math.max(yMin+0.1, Math.min(yMax-0.1, p)),
+      name: isLabeled ? labeledGenes[i] : null
+    });
+  }
+
+  const axesG = document.getElementById('axes');
+  const linesG = document.getElementById('threshold-lines');
+  const pointsG = document.getElementById('points');
+
+  function svgEl(tag, attrs){
+    const el = document.createElementNS('http://www.w3.org/2000/svg', tag);
+    for(const k in attrs){ el.setAttribute(k, attrs[k]); }
+    return el;
+  }
+
+  function drawAxes(){
+    axesG.innerHTML = '';
+    axesG.appendChild(svgEl('line', {x1:padL, y1:H-padB, x2:W-padR, y2:H-padB, stroke:'#D8CBAB', 'stroke-width':1}));
+    axesG.appendChild(svgEl('line', {x1:padL, y1:padT, x2:padL, y2:H-padB, stroke:'#D8CBAB', 'stroke-width':1}));
+    [-4,-2,0,2,4].forEach(v => {
+      const x = xScale(v);
+      const t = svgEl('text', {x:x, y:H-padB+18, 'font-size':10, fill:'#6B6153', 'text-anchor':'middle', 'font-family':'IBM Plex Mono, monospace'});
+      t.textContent = v; axesG.appendChild(t);
+    });
+    [0,2,4,6,8].forEach(v => {
+      const y = yScale(v);
+      const t = svgEl('text', {x:padL-10, y:y+3, 'font-size':10, fill:'#6B6153', 'text-anchor':'end', 'font-family':'IBM Plex Mono, monospace'});
+      t.textContent = v; axesG.appendChild(t);
+    });
+    const xl = svgEl('text', {x:(padL+W-padR)/2, y:H-8, 'font-size':11, fill:'#6B6153', 'text-anchor':'middle', 'font-family':'IBM Plex Mono, monospace'});
+    xl.textContent = 'log2 fold change'; axesG.appendChild(xl);
+    const yl = svgEl('text', {x:16, y:(padT+H-padB)/2, 'font-size':11, fill:'#6B6153', 'text-anchor':'middle', 'font-family':'IBM Plex Mono, monospace', transform:'rotate(-90 16,'+((padT+H-padB)/2)+')'});
+    yl.textContent = '−log10(p)'; axesG.appendChild(yl);
+  }
+
+  function render(fcThresh, pThresh){
+    linesG.innerHTML = '';
+    pointsG.innerHTML = '';
+
+    [-fcThresh, fcThresh].forEach(v => {
+      linesG.appendChild(svgEl('line', {x1:xScale(v), y1:padT, x2:xScale(v), y2:H-padB, stroke:'#A8562E', 'stroke-width':1, 'stroke-dasharray':'4 4', opacity:0.55}));
+    });
+    linesG.appendChild(svgEl('line', {x1:padL, y1:yScale(pThresh), x2:W-padR, y2:yScale(pThresh), stroke:'#A8562E', 'stroke-width':1, 'stroke-dasharray':'4 4', opacity:0.55}));
+
+    let up = 0, down = 0;
+    genes.forEach(g => {
+      const sig = Math.abs(g.fc) >= fcThresh && g.p >= pThresh;
+      let color = '#C9BC9E';
+      let r = 3.4;
+      let opacity = 0.55;
+      if(sig){
+        color = g.fc > 0 ? '#A8562E' : '#5F6B4A';
+        r = 4.4;
+        opacity = 0.92;
+        if(g.fc > 0) up++; else down++;
+      }
+      pointsG.appendChild(svgEl('circle', {cx:xScale(g.fc), cy:yScale(g.p), r:r, fill:color, opacity:opacity}));
+      if(sig && g.name){
+        const t = svgEl('text', {x:xScale(g.fc)+6, y:yScale(g.p)-6, 'font-size':10, fill:'#2B2620', 'font-family':'IBM Plex Mono, monospace'});
+        t.textContent = g.name;
+        pointsG.appendChild(t);
+      }
+    });
+
+    document.getElementById('sigCount').textContent = (up+down);
+    const narrativeEl = document.getElementById('narrative');
+    if(fcThresh <= 0.6 && pThresh <= 1.2){
+      narrativeEl.textContent = "Loosen the line this far, and noise starts to look like signal.";
+    } else if(fcThresh >= 2.2 && pThresh >= 3.5){
+      narrativeEl.textContent = "Tighten it this much, and real biology gets lost in caution.";
+    } else {
+      narrativeEl.textContent = up+down === 0 ? "No gene survives this line — worth asking why." : (up+down) + " genes just became a biomarker shortlist. Move the sliders and watch the list rewrite itself.";
+    }
+  }
+
+  drawAxes();
+  const fcSlider = document.getElementById('fcSlider');
+  const pSlider = document.getElementById('pSlider');
+  const fcVal = document.getElementById('fcVal');
+  const pVal = document.getElementById('pVal');
+
+  function update(){
+    const fc = parseFloat(fcSlider.value);
+    const p = parseFloat(pSlider.value);
+    fcVal.textContent = fc.toFixed(1);
+    pVal.textContent = p.toFixed(1);
+    render(fc, p);
+  }
+  fcSlider.addEventListener('input', update);
+  pSlider.addEventListener('input', update);
+  update();
+</script>
+
+</body>
+</html>
